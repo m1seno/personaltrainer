@@ -24,3 +24,21 @@ export const getCustomers = async (): Promise<Customer[]> => {
   );
   return response.data._embedded.customers;
 };
+
+export interface Training {
+  date: string;
+  duration: number;
+  activity: string;
+  _links: {
+    self: { href: string };
+    training: { href: string };
+    customer: { href: string };
+  }
+}
+
+export const getTrainings = async (): Promise<Training[]> => {
+  const response = await axios.get<{ _embedded: { trainings: Training[] } }>(
+    BASE_URL + "/trainings"
+  );
+  return response.data._embedded.trainings;
+};

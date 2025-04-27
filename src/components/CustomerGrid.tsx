@@ -14,18 +14,8 @@ function CustomerGrid() {
   const [columnDefs] = useState<ColDef<Customer>[]>([
     { field: "firstname", headerName: "Etunimi", sortable: true, filter: true },
     { field: "lastname", headerName: "Sukunimi", sortable: true, filter: true },
-    {
-      field: "streetaddress",
-      headerName: "Katuosoite",
-      sortable: true,
-      filter: true,
-    },
-    {
-      field: "postcode",
-      headerName: "Postinumero",
-      sortable: true,
-      filter: true,
-    },
+    { field: "streetaddress", headerName: "Katuosoite", sortable: true, filter: true},
+    { field: "postcode", headerName: "Postinumero", sortable: true, filter: true },
     { field: "city", headerName: "Kaupunki", sortable: true, filter: true },
     { field: "email", headerName: "Sähköposti", sortable: true, filter: true },
     { field: "phone", headerName: "Puhelin", sortable: true, filter: true },
