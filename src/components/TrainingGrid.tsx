@@ -65,7 +65,7 @@ function TrainingGrid() {
   }
 
   return (
-    <div style={{ minHeight: 500, width: "100%" }} className="ag-theme-alpine">
+    <div style={{ minHeight: 500, width: 600 }} className="ag-theme-alpine">
       <AgGridReact
         rowData={trainings}
         columnDefs={columnDefs}

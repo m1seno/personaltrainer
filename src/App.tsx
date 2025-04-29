@@ -1,9 +1,10 @@
 import './App.css'
-import Customers from './pages/Customers'
+//import Customers from './pages/Customers'
+import Trainings from './pages/Trainings'
 function App() {
   return (
     <div>
-      <Customers />
+      <Trainings />
     </div>
   )
 }
