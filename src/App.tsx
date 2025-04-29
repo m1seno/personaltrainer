@@ -1,10 +1,9 @@
 import './App.css'
-//import CustomerGrid from './components/CustomerGrid'
-import TrainingGrid from './components/TrainingGrid'
+import Customers from './pages/Customers'
 function App() {
   return (
     <div>
-      <TrainingGrid />
+      <Customers />
     </div>
   )
 }
