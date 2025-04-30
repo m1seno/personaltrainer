@@ -4,13 +4,14 @@ import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community";
 import { getCustomers, Customer } from "../service/api";
 import { toast } from "react-toastify";
 
-// Register all Community features
+// Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 function CustomerGrid() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Sarakemääritykset AG-Gridille
   const [columnDefs] = useState<ColDef<Customer>[]>([
     { field: "firstname", headerName: "Etunimi", sortable: true, filter: true },
     { field: "lastname", headerName: "Sukunimi", sortable: true, filter: true },
@@ -22,6 +23,7 @@ function CustomerGrid() {
   ]);
 
   useEffect(() => {
+    // Haetaan asiakkaat komponentin latautuessa
     const fetchCustomers = async () => {
       try {
         const data = await getCustomers();

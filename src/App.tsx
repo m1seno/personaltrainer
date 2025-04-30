@@ -8,13 +8,15 @@ import {
 } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
 function App() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Navigointifunktio sivujen välillä siirtymiseen
 
   return (
     <Box sx={{flexGrow : 1}}>
-      <CssBaseline />
+      <CssBaseline /> {/* Nollaa selaimen oletustyylit MUI:n mukaisiksi */}
       <AppBar position="static">
+        {/* Yläpalkki, jossa navigointipainikkeet */}
         <Toolbar sx={{ display: "flex", gap: 2 }}>
+          {/* Sovelluksen nimi toimii painikkeena kotisivulle */}
         <Button
             color="inherit"
             onClick={() => navigate('/')}
@@ -30,6 +32,7 @@ function App() {
           </Button>
         </Toolbar>
       </AppBar>
+      {/* Pääsisältö näytetään täällä reitityksen perusteella */}
       <Container maxWidth = "xl">
       <Outlet />
     </Container>

@@ -5,13 +5,14 @@ import { getTrainings, Training } from "../service/api";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 
-// Register all Community features
+// Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 function TrainingGrid() {
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Sarakemääritykset AG-Gridille
   const [columnDefs] = useState<ColDef<Training>[]>([
     {
       field: "date",
@@ -37,6 +38,7 @@ function TrainingGrid() {
       headerName: "Asiakas",
       sortable: true,
       filter: true,
+      // Haetaan asiakkaan nimi suoraan harjoitusobjektin customer-kentästä
       valueGetter: (params) =>
         params.data && params.data.customer
           ? `${params.data.customer.firstname} ${params.data.customer.lastname}`
@@ -45,6 +47,7 @@ function TrainingGrid() {
   ]);
 
   useEffect(() => {
+    // Haetaan harjoitukset komponentin alustuksessa
     const fetchTrainings = async () => {
       try {
         const data = await getTrainings();
