@@ -24,11 +24,11 @@ function App() {
           >
             Personal Trainer
           </Button>
-          <Button color="inherit" onClick={() => navigate('/trainings')}>
-            Treenit
-          </Button>
           <Button color="inherit" onClick={() => navigate('/customers')}>
             Asiakkaat
+          </Button>
+          <Button color="inherit" onClick={() => navigate('/trainings')}>
+            Treenit
           </Button>
         </Toolbar>
       </AppBar>

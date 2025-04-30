@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community";
-import { getCustomers, Customer } from "../service/api";
+import { getCustomers, CustomerGet } from "../service/api";
 import { toast } from "react-toastify";
 
 // Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-function CustomerGrid() {
-  const [customers, setCustomers] = useState<Customer[]>([]);
+// Määritellään propsin tyyppi
+type Props = {
+  reloadTrigger?: () => boolean;
+};
+
+function CustomerGrid({reloadTrigger}: Props) {
+  const [customers, setCustomers] = useState<CustomerGet[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Sarakemääritykset AG-Gridille
-  const [columnDefs] = useState<ColDef<Customer>[]>([
+  const [columnDefs] = useState<ColDef<CustomerGet>[]>([
     { field: "firstname", headerName: "Etunimi", sortable: true, filter: true },
     { field: "lastname", headerName: "Sukunimi", sortable: true, filter: true },
     { field: "streetaddress", headerName: "Katuosoite", sortable: true, filter: true},
@@ -37,7 +42,7 @@ function CustomerGrid() {
     };
 
     fetchCustomers();
-  }, []);
+  }, [reloadTrigger]); // reloadTrigger riippuvuus, jotta asiakaslista ladataan uudelleen kun asiakas lisätään
 
   if (loading) {
     return <p>Ladataan asiakkaita...</p>;

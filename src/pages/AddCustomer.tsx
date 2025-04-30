@@ -8,6 +8,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { toast } from "react-toastify";
 import { addCustomer } from "../service/api";
 
+// Määritellään propsin tyyppi
+type Props = {
+  onCustomerAdded: () => void;
+};
+
 export default function AddCustomer({ onCustomerAdded }: Props) {
   const [open, setOpen] = useState(false);
   const [customer, setCustomer] = useState({
