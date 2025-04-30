@@ -3,7 +3,8 @@ import axios from "axios";
 const BASE_URL =
   "https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api";
 
-export type Customer = {
+// Tyyppimääritys GET-pyynnölle, joka sisältää linkit
+export type CustomerGet = {
   firstname: string;
   lastname: string;
   streetaddress: string;
@@ -18,26 +19,37 @@ export type Customer = {
   };
 };
 
-// https://www.youtube.com/watch?v=_8YaUjcL0sw
-// Haetaan asiakkaat REST API:sta
-export const getCustomers = async (): Promise<Customer[]> => {
-  const response = await axios.get<{ _embedded: { customers: Customer[] } }>(
-    BASE_URL + "/customers"
-  );
-  return response.data._embedded.customers;
+// Tyyppimääritys POST-pyynnölle, joka ei sisällä linkkejä
+export type CustomerPost = {
+  firstname: string;
+  lastname: string;
+  streetaddress: string;
+  postcode: string;
+  city: string;
+  email: string;
+  phone: string;
 };
 
 export type Training = {
   date: string;
   duration: number;
   activity: string;
-  customer?: Customer;
+  customer?: CustomerGet;
   _links: {
     self: { href: string };
     training: { href: string };
     customer: { href: string };
-  }
-}
+  };
+};
+
+// https://www.youtube.com/watch?v=_8YaUjcL0sw
+// Haetaan asiakkaat REST API:sta
+export const getCustomers = async (): Promise<CustomerGet[]> => {
+  const response = await axios.get<{ _embedded: { customers: CustomerGet[] } }>(
+    BASE_URL + "/customers"
+  );
+  return response.data._embedded.customers;
+};
 
 // Haetaan harjoitukset REST API:sta
 export const getTrainings = async (): Promise<Training[]> => {
@@ -52,7 +64,7 @@ export const getTrainings = async (): Promise<Training[]> => {
     trainings.map(async (training) => {
       if (training._links.customer) {
         try {
-          const customerResponse = await axios.get<Customer>(
+          const customerResponse = await axios.get<CustomerGet>(
             training._links.customer.href
           );
           training.customer = customerResponse.data; // Lisätään asiakasobjekti harjoitukseen
@@ -67,6 +79,22 @@ export const getTrainings = async (): Promise<Training[]> => {
   // https://stackoverflow.com/questions/64928212/how-to-use-promise-allsettled-with-typescript
   // Suodatetaan vain onnistuneet tulokset ja palautetaan ne
   return trainingsWithCustomers
-    .filter((result): result is PromiseFulfilledResult<Training> => result.status === "fulfilled")
+    .filter(
+      (result): result is PromiseFulfilledResult<Training> =>
+        result.status === "fulfilled"
+    )
     .map((result) => result.value);
+};
+
+// Lisätään asiakas POST-pyynnöllä
+export const addCustomer = async (customer: CustomerPost) => {
+  await axios.post(
+    BASE_URL + "/customers",
+    customer, // Pyynnön body, joka sisältää asiakkaan tiedot
+    {
+      headers: {
+        "Content-Type": "application/json", // Määritetään bodyn tyyppi
+      },
+    }
+  );
 };
