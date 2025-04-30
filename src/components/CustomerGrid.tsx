@@ -42,7 +42,7 @@ function CustomerGrid() {
   }
 
   return (
-    <div style={{ minHeight: 500, width: 1000 }} className="ag-theme-alpine">
+    <div style={{ minHeight: 500, margin: '0 auto', width: 1000 }} className="ag-theme-alpine">
       <AgGridReact
         rowData={customers}
         columnDefs={columnDefs}

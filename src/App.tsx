@@ -6,7 +6,6 @@ import {
   CssBaseline,
   Toolbar,
 } from "@mui/material";
-//import "./App.css";
 import { Outlet, useNavigate } from "react-router-dom";
 function App() {
   const navigate = useNavigate();
@@ -31,7 +30,7 @@ function App() {
           </Button>
         </Toolbar>
       </AppBar>
-      <Container sx={{ mt: 3}}>
+      <Container maxWidth = "xl">
       <Outlet />
     </Container>
     </Box>

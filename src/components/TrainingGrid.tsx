@@ -23,7 +23,7 @@ function TrainingGrid() {
     },
     {
       field: "duration",
-      headerName: "Harjoituksen kesto (min)",
+      headerName: "Kesto",
       sortable: true,
       filter: true,
     },
@@ -65,7 +65,7 @@ function TrainingGrid() {
   }
 
   return (
-    <div style={{ minHeight: 500, width: 600 }} className="ag-theme-alpine">
+    <div style={{ minHeight: 500, margin: '0 auto', width: 600 }} className="ag-theme-alpine">
       <AgGridReact
         rowData={trainings}
         columnDefs={columnDefs}
