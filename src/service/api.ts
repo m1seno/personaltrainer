@@ -98,3 +98,17 @@ export const addCustomer = async (customer: CustomerPost) => {
     }
   );
 };
+
+export const updateCustomer = async (customer: CustomerGet) => {
+  const { firstname, lastname, streetaddress, postcode, city, email, phone, _links } = customer;
+
+  await axios.put(_links.self.href, {
+    firstname,
+    lastname,
+    streetaddress,
+    postcode,
+    city,
+    email,
+    phone,
+  });
+};

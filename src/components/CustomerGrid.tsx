@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community";
+import { AllCommunityModule, ColDef, ICellRendererParams, ModuleRegistry } from "ag-grid-community";
 import { getCustomers, CustomerGet } from "../service/api";
 import { toast } from "react-toastify";
+import EditCustomer from "./EditCustomer";
 
 // Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 // Määritellään propsin tyyppi
 type Props = {
-  reloadTrigger?: () => boolean;
+  reloadTrigger?: boolean;
+  onCustomerAdded: () => void;
+  onCustomerEdited: () => void;
 };
 
-function CustomerGrid({reloadTrigger}: Props) {
+function CustomerGrid({reloadTrigger, onCustomerAdded}: Props) {
   const [customers, setCustomers] = useState<CustomerGet[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +28,18 @@ function CustomerGrid({reloadTrigger}: Props) {
     { field: "city", headerName: "Kaupunki", sortable: true, filter: true },
     { field: "email", headerName: "Sähköposti", sortable: true, filter: true },
     { field: "phone", headerName: "Puhelin", sortable: true, filter: true },
+    {
+      headerName: "Toiminnot",
+      cellRenderer: (params: ICellRendererParams<CustomerGet>) => (
+        <EditCustomer
+          currentCustomer={params.data as CustomerGet} // params.data on CustomerGet-tyyppinen
+          onCustomerEdited={onCustomerAdded} // sama logiikka kuin AddCustomerilla
+        />
+      ),
+      width: 140,
+      sortable: false,
+      filter: false,
+    }
   ]);
 
   useEffect(() => {

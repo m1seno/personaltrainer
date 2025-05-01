@@ -18,7 +18,11 @@ const Customers = () => {
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <AddCustomer onCustomerAdded={handleCustomerAdded} />
       </Box>
-      <CustomerGrid reloadTrigger={() => reloadTrigger} />
+      <CustomerGrid
+        reloadTrigger={reloadTrigger}
+        onCustomerAdded={handleCustomerAdded}
+        onCustomerEdited={handleCustomerAdded}
+      />
     </Box>
   );
 };

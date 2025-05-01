@@ -6,23 +6,27 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { toast } from "react-toastify";
-import { addCustomer } from "../service/api";
+import { updateCustomer, CustomerGet } from "../service/api";
 
-// Määritellään propsin tyyppi
-type Props = {
-  onCustomerAdded: () => void;
-};
+// Komponentin propsit: nykyinen asiakas ja callback kun muokkaus on tehty
+interface Props {
+  currentCustomer: CustomerGet;
+  onCustomerEdited: () => void;
+}
 
-export default function AddCustomer({ onCustomerAdded }: Props) {
+export default function EditCustomer({
+  currentCustomer,
+  onCustomerEdited,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [customer, setCustomer] = useState({
-    firstname: "",
-    lastname: "",
-    streetaddress: "",
-    postcode: "",
-    city: "",
-    email: "",
-    phone: "",
+    firstname: currentCustomer.firstname,
+    lastname: currentCustomer.lastname,
+    streetaddress: currentCustomer.streetaddress,
+    postcode: currentCustomer.postcode,
+    city: currentCustomer.city,
+    email: currentCustomer.email,
+    phone: currentCustomer.phone,
   });
 
   const handleClickOpen = () => {
@@ -39,12 +43,12 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
 
   const handleSubmit = async () => {
     try {
-      await addCustomer(customer);
-      toast.success("Asiakas lisätty");
-      onCustomerAdded(); // Ilmoitetaan parent-komponentille, että asiakas on lisätty
+      await updateCustomer({ ...currentCustomer, ...customer });
+      toast.success("Asiakas muokattu");
+      onCustomerEdited();
     } catch (error) {
       console.error(error);
-      toast.error("Asiakkaan lisäys epäonnistui");
+      toast.error("Asiakkaan muokkaus epäonnistui");
     } finally {
       setOpen(false);
     }
@@ -52,8 +56,8 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
 
   return (
     <React.Fragment>
-      <Button variant="contained" onClick={handleClickOpen}>
-        Add customer
+      <Button variant="contained" color="warning" size="small" onClick={handleClickOpen}>
+        Edit
       </Button>
       <Dialog
         open={open}
@@ -69,13 +73,12 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
           },
         }}
       >
-        <DialogTitle>Add customer</DialogTitle>
+        <DialogTitle>Edit customer</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             required
             margin="dense"
-            id="firstname"
             name="firstname"
             label="First name"
             type="text"
@@ -85,10 +88,8 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
             value={customer.firstname}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
-            id="lastname"
             name="lastname"
             label="Last name"
             type="text"
@@ -98,10 +99,8 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
             value={customer.lastname}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
-            id="streetaddress"
             name="streetaddress"
             label="Street address"
             type="text"
@@ -111,10 +110,8 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
             value={customer.streetaddress}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
-            id="postcode"
             name="postcode"
             label="Postal code"
             type="text"
@@ -124,10 +121,8 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
             value={customer.postcode}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
-            id="city"
             name="city"
             label="City"
             type="text"
@@ -137,10 +132,8 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
             value={customer.city}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
-            id="email"
             name="email"
             label="Email"
             type="email"
@@ -150,10 +143,8 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
             value={customer.email}
           />
           <TextField
-            autoFocus
             required
             margin="dense"
-            id="phone"
             name="phone"
             label="Phone"
             type="text"
