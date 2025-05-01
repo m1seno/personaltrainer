@@ -16,7 +16,7 @@ function TrainingGrid() {
   const [columnDefs] = useState<ColDef<Training>[]>([
     {
       field: "date",
-      headerName: "Päivämäärä",
+      headerName: "Date",
       sortable: true,
       filter: true,
       valueFormatter: (params: { value: string }) =>
@@ -24,18 +24,18 @@ function TrainingGrid() {
     },
     {
       field: "duration",
-      headerName: "Kesto",
+      headerName: "Duration",
       sortable: true,
       filter: true,
     },
     {
       field: "activity",
-      headerName: "Aktiviteetti",
+      headerName: "Activity",
       sortable: true,
       filter: true,
     },
     {
-      headerName: "Asiakas",
+      headerName: "Customer",
       sortable: true,
       filter: true,
       // Haetaan asiakkaan nimi suoraan harjoitusobjektin customer-kentästä

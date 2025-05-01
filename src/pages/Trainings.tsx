@@ -5,7 +5,7 @@ const Trainings = () => {
   return (
     <Box sx={{p: 2}}>
       <Typography variant="h4" align="center" gutterBottom>
-        Treenilista
+        Workouts
       </Typography>
       <TrainingGrid />
     </Box>

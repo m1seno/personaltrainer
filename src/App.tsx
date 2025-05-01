@@ -25,10 +25,10 @@ function App() {
             Personal Trainer
           </Button>
           <Button color="inherit" onClick={() => navigate('/customers')}>
-            Asiakkaat
+            Customers
           </Button>
           <Button color="inherit" onClick={() => navigate('/trainings')}>
-            Treenit
+            Workouts
           </Button>
         </Toolbar>
       </AppBar>

@@ -13,7 +13,7 @@ const Customers = () => {
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h4" align="center" gutterBottom>
-        Asiakaslista
+        Customers
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <AddCustomer onCustomerAdded={handleCustomerAdded} />

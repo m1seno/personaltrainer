@@ -21,15 +21,15 @@ function CustomerGrid({reloadTrigger, onCustomerAdded}: Props) {
 
   // Sarakemääritykset AG-Gridille
   const [columnDefs] = useState<ColDef<CustomerGet>[]>([
-    { field: "firstname", headerName: "Etunimi", sortable: true, filter: true },
-    { field: "lastname", headerName: "Sukunimi", sortable: true, filter: true },
-    { field: "streetaddress", headerName: "Katuosoite", sortable: true, filter: true},
-    { field: "postcode", headerName: "Postinumero", sortable: true, filter: true },
-    { field: "city", headerName: "Kaupunki", sortable: true, filter: true },
-    { field: "email", headerName: "Sähköposti", sortable: true, filter: true },
-    { field: "phone", headerName: "Puhelin", sortable: true, filter: true },
+    { field: "firstname", headerName: "First name", sortable: true, filter: true },
+    { field: "lastname", headerName: "Last name", sortable: true, filter: true },
+    { field: "streetaddress", headerName: "Address", sortable: true, filter: true},
+    { field: "postcode", headerName: "Postal code", sortable: true, filter: true },
+    { field: "city", headerName: "City", sortable: true, filter: true },
+    { field: "email", headerName: "Email", sortable: true, filter: true },
+    { field: "phone", headerName: "Phone", sortable: true, filter: true },
     {
-      headerName: "Toiminnot",
+      headerName: "Functionalities",
       cellRenderer: (params: ICellRendererParams<CustomerGet>) => (
         <EditCustomer
           currentCustomer={params.data as CustomerGet} // params.data on CustomerGet-tyyppinen
@@ -64,7 +64,7 @@ function CustomerGrid({reloadTrigger, onCustomerAdded}: Props) {
   }
 
   return (
-    <div style={{ minHeight: 500, margin: '0 auto', width: 1000 }} className="ag-theme-alpine">
+    <div style={{ minHeight: 500, margin: '0 auto', width: 1050 }} className="ag-theme-alpine">
       <AgGridReact
         rowData={customers}
         columnDefs={columnDefs}
