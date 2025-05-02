@@ -1,12 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import CustomerGrid from "../components/CustomerGrid";
-import AddCustomer from "./AddCustomer";
+import AddCustomer from "../components/AddCustomer";
 import { useState } from "react";
 
 const Customers = () => {
   const [reloadTrigger, setReloadTrigger] = useState(false);
 
-  const handleCustomerAdded = () => {
+  const reloadGrid = () => {
     setReloadTrigger(!reloadTrigger); // Vaihdetaan tilaa, jotta asiakaslista ladataan uudelleen
   };
 
@@ -16,12 +16,14 @@ const Customers = () => {
         Customers
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-        <AddCustomer onCustomerAdded={handleCustomerAdded} />
+        <AddCustomer onCustomerAdded={reloadGrid} />
       </Box>
       <CustomerGrid
         reloadTrigger={reloadTrigger}
-        onCustomerAdded={handleCustomerAdded}
-        onCustomerEdited={handleCustomerAdded}
+        reloadGrid={reloadGrid}
+        onCustomerAdded={reloadGrid}
+        onCustomerEdited={reloadGrid}
+        onCustomerDeleted={reloadGrid}
       />
     </Box>
   );

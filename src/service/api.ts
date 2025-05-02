@@ -112,3 +112,9 @@ export const updateCustomer = async (customer: CustomerGet) => {
     phone,
   });
 };
+
+export const deleteCustomer = async (customer: CustomerGet) => {
+  const {_links } = customer;
+
+  await axios.delete(_links.self.href);
+};

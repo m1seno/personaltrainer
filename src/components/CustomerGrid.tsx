@@ -4,6 +4,7 @@ import { AllCommunityModule, ColDef, ICellRendererParams, ModuleRegistry } from 
 import { getCustomers, CustomerGet } from "../service/api";
 import { toast } from "react-toastify";
 import EditCustomer from "./EditCustomer";
+import DeleteCustomer from "./DeleteCustomer";
 
 // Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -11,11 +12,13 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 // Määritellään propsin tyyppi
 type Props = {
   reloadTrigger?: boolean;
-  onCustomerAdded: () => void;
+  reloadGrid: () => void;
+  onCustomerAdded?: () => void;
   onCustomerEdited: () => void;
+  onCustomerDeleted: () => void;
 };
 
-function CustomerGrid({reloadTrigger, onCustomerAdded}: Props) {
+function CustomerGrid({reloadTrigger, reloadGrid}: Props) {
   const [customers, setCustomers] = useState<CustomerGet[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,10 +34,16 @@ function CustomerGrid({reloadTrigger, onCustomerAdded}: Props) {
     {
       headerName: "Functionalities",
       cellRenderer: (params: ICellRendererParams<CustomerGet>) => (
+        <div style={{ display: "flex", gap: "10px" }}>
         <EditCustomer
           currentCustomer={params.data as CustomerGet} // params.data on CustomerGet-tyyppinen
-          onCustomerEdited={onCustomerAdded} // sama logiikka kuin AddCustomerilla
+          onCustomerEdited={reloadGrid} // sama logiikka kuin AddCustomerilla
         />
+        <DeleteCustomer
+          currentCustomer={params.data as CustomerGet} // params.data on CustomerGet-tyyppinen
+          onCustomerDeleted={reloadGrid} // sama logiikka kuin AddCustomerilla
+        />
+        </div>
       ),
       width: 140,
       sortable: false,
@@ -64,7 +73,7 @@ function CustomerGrid({reloadTrigger, onCustomerAdded}: Props) {
   }
 
   return (
-    <div style={{ minHeight: 500, margin: '0 auto', width: 1050 }} className="ag-theme-alpine">
+    <div style={{ minHeight: 500, margin: '0 auto', width: 1300 }} className="ag-theme-alpine">
       <AgGridReact
         rowData={customers}
         columnDefs={columnDefs}

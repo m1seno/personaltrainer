@@ -52,7 +52,7 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
 
   return (
     <React.Fragment>
-      <Button variant="contained" onClick={handleClickOpen}>
+      <Button variant="contained" color="success" onClick={handleClickOpen}>
         Add customer
       </Button>
       <Dialog

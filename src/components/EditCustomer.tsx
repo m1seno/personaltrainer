@@ -56,7 +56,7 @@ export default function EditCustomer({
 
   return (
     <React.Fragment>
-      <Button variant="contained" color="warning" size="small" onClick={handleClickOpen}>
+      <Button variant="contained" color="primary" size="small" onClick={handleClickOpen}>
         Edit
       </Button>
       <Dialog
