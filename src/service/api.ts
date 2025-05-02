@@ -136,3 +136,10 @@ export const addTraining = async (training: TrainingPost) => {
     headers: { "Content-Type": "application/json" },
   });
 };
+
+// Poistetaan harjoitus DELETE-pyynnöllä
+export const deleteTraining = async (training: TrainingAll) => {
+  const {_links } = training;
+
+  await axios.delete(_links.self.href);
+};
