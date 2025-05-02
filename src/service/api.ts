@@ -3,8 +3,8 @@ import axios from "axios";
 const BASE_URL =
   "https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api";
 
-// Tyyppimääritys GET-pyynnölle, joka sisältää linkit
-export type CustomerGet = {
+// Tyyppimääritys, joka sisältää linkit
+export type CustomerAll = {
   firstname: string;
   lastname: string;
   streetaddress: string;
@@ -19,8 +19,8 @@ export type CustomerGet = {
   };
 };
 
-// Tyyppimääritys POST-pyynnölle, joka ei sisällä linkkejä
-export type CustomerPost = {
+// Tyyppimääritys, joka ei sisällä linkkejä
+export type Customer = {
   firstname: string;
   lastname: string;
   streetaddress: string;
@@ -34,7 +34,7 @@ export type Training = {
   date: string;
   duration: number;
   activity: string;
-  customer?: CustomerGet;
+  customer?: CustomerAll;
   _links: {
     self: { href: string };
     training: { href: string };
@@ -44,8 +44,8 @@ export type Training = {
 
 // https://www.youtube.com/watch?v=_8YaUjcL0sw
 // Haetaan asiakkaat REST API:sta
-export const getCustomers = async (): Promise<CustomerGet[]> => {
-  const response = await axios.get<{ _embedded: { customers: CustomerGet[] } }>(
+export const getCustomers = async (): Promise<CustomerAll[]> => {
+  const response = await axios.get<{ _embedded: { customers: CustomerAll[] } }>(
     BASE_URL + "/customers"
   );
   return response.data._embedded.customers;
@@ -64,7 +64,7 @@ export const getTrainings = async (): Promise<Training[]> => {
     trainings.map(async (training) => {
       if (training._links.customer) {
         try {
-          const customerResponse = await axios.get<CustomerGet>(
+          const customerResponse = await axios.get<CustomerAll>(
             training._links.customer.href
           );
           training.customer = customerResponse.data; // Lisätään asiakasobjekti harjoitukseen
@@ -87,7 +87,7 @@ export const getTrainings = async (): Promise<Training[]> => {
 };
 
 // Lisätään asiakas POST-pyynnöllä
-export const addCustomer = async (customer: CustomerPost) => {
+export const addCustomer = async (customer: Customer) => {
   await axios.post(
     BASE_URL + "/customers",
     customer, // Pyynnön body, joka sisältää asiakkaan tiedot
@@ -99,7 +99,9 @@ export const addCustomer = async (customer: CustomerPost) => {
   );
 };
 
-export const updateCustomer = async (customer: CustomerGet) => {
+// Muokataan asiakasta PUT-pyynnöllä
+export const updateCustomer = async (customer: CustomerAll) => {
+  // Asiakkaan tiedot, jotka halutaan päivittää
   const { firstname, lastname, streetaddress, postcode, city, email, phone, _links } = customer;
 
   await axios.put(_links.self.href, {
@@ -113,7 +115,8 @@ export const updateCustomer = async (customer: CustomerGet) => {
   });
 };
 
-export const deleteCustomer = async (customer: CustomerGet) => {
+// Poistetaan asiakas DELETE-pyynnöllä
+export const deleteCustomer = async (customer: CustomerAll) => {
   const {_links } = customer;
 
   await axios.delete(_links.self.href);

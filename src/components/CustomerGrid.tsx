@@ -6,7 +6,7 @@ import {
   ICellRendererParams,
   ModuleRegistry,
 } from "ag-grid-community";
-import { getCustomers, CustomerGet } from "../service/api";
+import { getCustomers, CustomerAll } from "../service/api";
 import { toast } from "react-toastify";
 import EditCustomer from "./EditCustomer";
 import DeleteCustomer from "./DeleteCustomer";
@@ -19,19 +19,19 @@ type Props = {
   reloadTrigger?: boolean;
   reloadGrid: () => void;
   onCustomerAdded?: () => void;
-  onCustomerEdited: (update: CustomerGet) => void;
+  onCustomerEdited: (update: CustomerAll) => void;
   onCustomerDeleted: () => void;
 };
 
 function CustomerGrid({ reloadTrigger, reloadGrid }: Props) {
-  const [customers, setCustomers] = useState<CustomerGet[]>([]);
+  const [customers, setCustomers] = useState<CustomerAll[]>([]);
   const [loading, setLoading] = useState(true);
 
   // AG Gridin viite, jonka avulla voidaan käsitellä rivejä ohjelmallisesti
-  const gridRef = useRef<AgGridReact<CustomerGet>>(null);
+  const gridRef = useRef<AgGridReact<CustomerAll>>(null);
 
   // Sarakemääritykset AG-Gridille
-  const [columnDefs] = useState<ColDef<CustomerGet>[]>([
+  const [columnDefs] = useState<ColDef<CustomerAll>[]>([
     {
       field: "firstname",
       headerName: "First name",
@@ -61,14 +61,14 @@ function CustomerGrid({ reloadTrigger, reloadGrid }: Props) {
     { field: "phone", headerName: "Phone", sortable: true, filter: true },
     {
       headerName: "Functionalities",
-      cellRenderer: (params: ICellRendererParams<CustomerGet>) => (
+      cellRenderer: (params: ICellRendererParams<CustomerAll>) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <EditCustomer
-            currentCustomer={params.data as CustomerGet} // params.data on CustomerGet-tyyppinen
+            currentCustomer={params.data as CustomerAll} // params.data on CustomerAll-tyyppinen
             onCustomerEdited={reloadGrid} // sama logiikka kuin AddCustomerilla
           />
           <DeleteCustomer
-            currentCustomer={params.data as CustomerGet} // params.data on CustomerGet-tyyppinen
+            currentCustomer={params.data as CustomerAll} // params.data on CustomerAll-tyyppinen
             onCustomerDeleted={reloadGrid} // sama logiikka kuin AddCustomerilla
           />
         </div>

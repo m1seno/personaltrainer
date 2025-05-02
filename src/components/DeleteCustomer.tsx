@@ -1,12 +1,12 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { CustomerGet, deleteCustomer } from "../service/api";
+import { CustomerAll, deleteCustomer } from "../service/api";
 import { toast } from "react-toastify";
 import confirm from "../service/useConfirm";
 
 interface Props {
   onCustomerDeleted: () => void; // Callback-funktio, joka kutsutaan kun asiakas on poistettu
-  currentCustomer: CustomerGet;
+  currentCustomer: CustomerAll;
 }
 
 export default function DeleteCustomer({

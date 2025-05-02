@@ -6,12 +6,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { toast } from "react-toastify";
-import { updateCustomer, CustomerGet } from "../service/api";
+import { updateCustomer, CustomerAll } from "../service/api";
 
 // Komponentin propsit: nykyinen asiakas ja callback kun muokkaus on tehty
 interface Props {
-  currentCustomer: CustomerGet;
-  onCustomerEdited: (updated: CustomerGet) => void;
+  currentCustomer: CustomerAll;
+  onCustomerEdited: (updated: CustomerAll) => void;
 }
 
 export default function EditCustomer({
@@ -43,7 +43,7 @@ export default function EditCustomer({
 
   const handleSubmit = async () => {
     try {
-      const updatedCustomer: CustomerGet = {
+      const updatedCustomer: CustomerAll = {
         ...currentCustomer, // Säilytetään linkit ja ID
         ...customer, // Päivitetään muuttuneet kentät
       };
