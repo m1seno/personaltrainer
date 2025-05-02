@@ -40,11 +40,11 @@ export default function AddCustomer({ onCustomerAdded }: Props) {
   const handleSubmit = async () => {
     try {
       await addCustomer(customer);
-      toast.success("Asiakas lisätty");
+      toast.success("Customer added successfully");
       onCustomerAdded(); // Ilmoitetaan parent-komponentille, että asiakas on lisätty
     } catch (error) {
       console.error(error);
-      toast.error("Asiakkaan lisäys epäonnistui");
+      toast.error("Customer addition failed");
     } finally {
       setOpen(false);
     }

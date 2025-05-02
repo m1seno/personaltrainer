@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community";
-import { getTrainings, Training } from "../service/api";
+import { getTrainings, TrainingAll } from "../service/api";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 
@@ -9,11 +9,11 @@ import dayjs from "dayjs";
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 function TrainingGrid() {
-  const [trainings, setTrainings] = useState<Training[]>([]);
+  const [trainings, setTrainings] = useState<TrainingAll[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Sarakemääritykset AG-Gridille
-  const [columnDefs] = useState<ColDef<Training>[]>([
+  const [columnDefs] = useState<ColDef<TrainingAll>[]>([
     {
       field: "date",
       headerName: "Date",

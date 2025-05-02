@@ -30,7 +30,8 @@ export type Customer = {
   phone: string;
 };
 
-export type Training = {
+// Tyyppimääritys, joka sisältää linkit
+export type TrainingAll = {
   date: string;
   duration: number;
   activity: string;
@@ -40,6 +41,13 @@ export type Training = {
     training: { href: string };
     customer: { href: string };
   };
+};
+
+export type TrainingPost = {
+  date: string; // ISO-8601 muoto
+  activity: string;
+  duration: number;
+  customer: string; // asiakaslinkki
 };
 
 // https://www.youtube.com/watch?v=_8YaUjcL0sw
@@ -52,8 +60,8 @@ export const getCustomers = async (): Promise<CustomerAll[]> => {
 };
 
 // Haetaan harjoitukset REST API:sta
-export const getTrainings = async (): Promise<Training[]> => {
-  const response = await axios.get<{ _embedded: { trainings: Training[] } }>(
+export const getTrainings = async (): Promise<TrainingAll[]> => {
+  const response = await axios.get<{ _embedded: { trainings: TrainingAll[] } }>(
     BASE_URL + "/trainings"
   );
 
@@ -80,7 +88,7 @@ export const getTrainings = async (): Promise<Training[]> => {
   // Suodatetaan vain onnistuneet tulokset ja palautetaan ne
   return trainingsWithCustomers
     .filter(
-      (result): result is PromiseFulfilledResult<Training> =>
+      (result): result is PromiseFulfilledResult<TrainingAll> =>
         result.status === "fulfilled"
     )
     .map((result) => result.value);
@@ -120,4 +128,11 @@ export const deleteCustomer = async (customer: CustomerAll) => {
   const {_links } = customer;
 
   await axios.delete(_links.self.href);
+};
+
+// Lisätään harjoitus POST-pyynnöllä
+export const addTraining = async (training: TrainingPost) => {
+  await axios.post(BASE_URL + "/trainings", training, {
+    headers: { "Content-Type": "application/json" },
+  });
 };
