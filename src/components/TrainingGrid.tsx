@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community";
+import {
+  AllCommunityModule,
+  ColDef,
+  ICellRendererParams,
+  ModuleRegistry,
+} from "ag-grid-community";
 import { getTrainings, TrainingAll } from "../service/api";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import DeleteTraining from "./DeleteTraining";
 
 // Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -13,9 +19,10 @@ type Props = {
   reloadTrigger?: boolean;
   reloadGrid: () => void;
   onTrainingAdded?: () => void;
+  onTrainingDeleted: () => void;
 };
 
-function TrainingGrid({ reloadTrigger }: Props) {
+function TrainingGrid({ reloadTrigger, reloadGrid }: Props) {
   const [trainings, setTrainings] = useState<TrainingAll[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,6 +58,18 @@ function TrainingGrid({ reloadTrigger }: Props) {
           ? `${params.data.customer.firstname} ${params.data.customer.lastname}`
           : "Ei tietoja",
     },
+    {
+      headerName: "Functionalities",
+      cellRenderer: (params: ICellRendererParams<TrainingAll>) => (
+        <DeleteTraining
+          currentTraining={params.data as TrainingAll} // params.data on TrainingAll-tyyppinen
+          onTrainingDeleted={reloadGrid} // sama logiikka kuin AddTrainingilla
+        />
+      ),
+      width: 140,
+      sortable: false,
+      filter: false,
+    },
   ]);
 
   useEffect(() => {
@@ -75,7 +94,10 @@ function TrainingGrid({ reloadTrigger }: Props) {
   }
 
   return (
-    <div style={{ minHeight: 500, margin: '0 auto', width: 600 }} className="ag-theme-alpine">
+    <div
+      style={{ minHeight: 500, margin: "0 auto", width: 640 }}
+      className="ag-theme-alpine"
+    >
       <AgGridReact
         rowData={trainings}
         columnDefs={columnDefs}

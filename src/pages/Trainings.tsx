@@ -24,6 +24,7 @@ const Trainings = () => {
         reloadTrigger={reloadTrigger}
         reloadGrid={reloadGrid}
         onTrainingAdded={reloadGrid}
+        onTrainingDeleted={reloadGrid}
       />
     </Box>
   );
