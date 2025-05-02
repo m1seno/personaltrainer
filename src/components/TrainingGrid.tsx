@@ -8,7 +8,14 @@ import dayjs from "dayjs";
 // Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-function TrainingGrid() {
+// Määritellään propsin tyyppi
+type Props = {
+  reloadTrigger?: boolean;
+  reloadGrid: () => void;
+  onTrainingAdded?: () => void;
+};
+
+function TrainingGrid({ reloadTrigger }: Props) {
   const [trainings, setTrainings] = useState<TrainingAll[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,14 +61,14 @@ function TrainingGrid() {
         setTrainings(data);
       } catch (error) {
         console.error(error);
-        toast.error("Asiakastietojen haku epäonnistui");
+        toast.error("Could not fetch trainings");
       } finally {
         setLoading(false);
       }
     };
 
     fetchTrainings();
-  }, []);
+  }, [reloadTrigger]);
 
   if (loading) {
     return <p>Ladataan harjoituksia...</p>;

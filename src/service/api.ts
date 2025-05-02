@@ -20,7 +20,7 @@ export type CustomerAll = {
 };
 
 // Tyyppimääritys, joka ei sisällä linkkejä
-export type Customer = {
+type Customer = {
   firstname: string;
   lastname: string;
   streetaddress: string;
@@ -43,7 +43,7 @@ export type TrainingAll = {
   };
 };
 
-export type TrainingPost = {
+type TrainingPost = {
   date: string; // ISO-8601 muoto
   activity: string;
   duration: number;
