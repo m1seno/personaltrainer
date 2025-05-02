@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { CustomerGet, deleteCustomer } from "../service/api";
 import { toast } from "react-toastify";
-import confirm from "./ConfirmDialog";
+import confirm from "../service/useConfirm";
 
 interface Props {
   onCustomerDeleted: () => void; // Callback-funktio, joka kutsutaan kun asiakas on poistettu
@@ -22,11 +22,11 @@ export default function DeleteCustomer({
     }
     try {
       await deleteCustomer(currentCustomer);
-      toast.success("Asiakas poistettu");
+      toast.success("Customer deleted successfully");
       onCustomerDeleted();
     } catch (error) {
       console.error(error);
-      toast.error("Asiakkaan poisto epäonnistui");
+      toast.error("Failed to delete customer");
     }
   };
 

@@ -1,4 +1,4 @@
-import { confirmable, createConfirmation, ConfirmDialog } from 'react-confirm';
+import { ConfirmDialog } from 'react-confirm';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
@@ -26,4 +26,4 @@ const ConfirmationDialog: ConfirmDialog<{ confirmation: string }, boolean> = ({
   );
 
 // Viedään toiminnallinen confirm-funktio
-export default createConfirmation(confirmable(ConfirmationDialog));
+export default ConfirmationDialog;
