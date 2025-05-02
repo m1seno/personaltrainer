@@ -11,7 +11,7 @@ import { updateCustomer, CustomerGet } from "../service/api";
 // Komponentin propsit: nykyinen asiakas ja callback kun muokkaus on tehty
 interface Props {
   currentCustomer: CustomerGet;
-  onCustomerEdited: () => void;
+  onCustomerEdited: (updated: CustomerGet) => void;
 }
 
 export default function EditCustomer({
@@ -43,9 +43,13 @@ export default function EditCustomer({
 
   const handleSubmit = async () => {
     try {
-      await updateCustomer({ ...currentCustomer, ...customer });
+      const updatedCustomer: CustomerGet = {
+        ...currentCustomer, // Säilytetään linkit ja ID
+        ...customer, // Päivitetään muuttuneet kentät
+      };
+      await updateCustomer( updatedCustomer );
       toast.success("Asiakas muokattu");
-      onCustomerEdited();
+      onCustomerEdited( updatedCustomer ); // Ilmoitetaan parent-komponentille, että asiakas on muokattu
     } catch (error) {
       console.error(error);
       toast.error("Asiakkaan muokkaus epäonnistui");
@@ -56,7 +60,12 @@ export default function EditCustomer({
 
   return (
     <React.Fragment>
-      <Button variant="contained" color="primary" size="small" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        onClick={handleClickOpen}
+      >
         Edit
       </Button>
       <Dialog
