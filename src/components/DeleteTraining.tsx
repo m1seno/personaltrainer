@@ -15,18 +15,18 @@ export default function DeleteTraining({
 }: Props) {
   const handleDelete = async () => {
     const confirmed = await confirm({
-      confirmation: "Are you sure you want to delete this training?", // Näytetään vahvistusdialogi
+      confirmation: "Are you sure you want to delete this workout?", // Näytetään vahvistusdialogi
     });
     if (!confirmed) {
       return; // Käyttäjä peruutti poiston
     }
     try {
       await deleteTraining(currentTraining);
-      toast.success("Training deleted successfully");
+      toast.success("Workout deleted successfully");
       onTrainingDeleted();
     } catch (error) {
       console.error(error);
-      toast.error("Failed to delete training");
+      toast.error("Failed to delete workout");
     }
   };
 
