@@ -2,7 +2,6 @@ import {
   AppBar,
   Box,
   Button,
-  Container,
   CssBaseline,
   Toolbar,
 } from "@mui/material";
@@ -32,12 +31,15 @@ function App() {
           <Button color="inherit" onClick={() => navigate("/trainings")}>
             Workouts
           </Button>
+          <Button color="inherit" onClick={() => navigate("/calendar")}>
+            Calendar
+          </Button>
         </Toolbar>
       </AppBar>
       {/* Pääsisältö näytetään täällä reitityksen perusteella */}
-      <Container maxWidth="xl">
+      <Box sx={{ p: 1 }}>
         <Outlet />
-      </Container>
+      </Box>
       <ToastContainer
         position="top-right"
         autoClose={3000}

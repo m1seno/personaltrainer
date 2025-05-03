@@ -6,6 +6,8 @@ import Trainings from "./pages/Trainings.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import Error from "./pages/Error.tsx";
+import "react-big-calendar/lib/css/react-big-calendar.css"; // Tuodaan kalenterin tyylit
+import Calendar from "./pages/Calendar.tsx";
 
 // Määritellään sovelluksen reititys
 const router = createBrowserRouter([
@@ -17,6 +19,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },             // / → Etusivu
       { path: "customers", element: <Customers /> },  // /customers → Asiakassivu
       { path: "trainings", element: <Trainings /> },  // /trainings → Treenisivu
+      { path: "calendar", element: <Calendar />, }, // /calendar → Kalenterisivu
     ],
   },
 ]);
