@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import {
   AllCommunityModule,
@@ -21,14 +21,14 @@ type Props = {
   onCustomerAdded?: () => void;
   onCustomerEdited: (update: CustomerAll) => void;
   onCustomerDeleted: () => void;
+  gridRef: RefObject<AgGridReact<CustomerAll> | null>;
 };
 
-function CustomerGrid({ reloadTrigger, reloadGrid }: Props) {
+function CustomerGrid({ reloadTrigger, reloadGrid, gridRef }: Props) {
   const [customers, setCustomers] = useState<CustomerAll[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // AG Gridin viite, jonka avulla voidaan käsitellä rivejä ohjelmallisesti
-  const gridRef = useRef<AgGridReact<CustomerAll>>(null);
+  
 
   // Sarakemääritykset AG-Gridille
   const [columnDefs] = useState<ColDef<CustomerAll>[]>([

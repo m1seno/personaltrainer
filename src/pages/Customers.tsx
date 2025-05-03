@@ -1,10 +1,15 @@
 import { Box, Typography } from "@mui/material";
 import CustomerGrid from "../components/CustomerGrid";
 import AddCustomer from "../components/AddCustomer";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import ExportCsv from "../components/ExportCsv";
+import { AgGridReact } from "ag-grid-react";
+import { CustomerAll } from "../service/api";
 
 const Customers = () => {
   const [reloadTrigger, setReloadTrigger] = useState(false);
+
+  const gridRef = useRef<AgGridReact<CustomerAll> | null>(null); // Luodaan ref asiakaslistalle
 
   const reloadGrid = () => {
     setReloadTrigger(!reloadTrigger); // Vaihdetaan tilaa, jotta asiakaslista ladataan uudelleen
@@ -17,6 +22,7 @@ const Customers = () => {
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <AddCustomer onCustomerAdded={reloadGrid} />
+        <ExportCsv gridRef={gridRef} />
       </Box>
       <CustomerGrid
         reloadTrigger={reloadTrigger}
@@ -24,6 +30,7 @@ const Customers = () => {
         onCustomerAdded={reloadGrid}
         onCustomerEdited={reloadGrid}
         onCustomerDeleted={reloadGrid}
+        gridRef={gridRef}
       />
     </Box>
   );
