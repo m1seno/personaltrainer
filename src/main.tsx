@@ -8,6 +8,7 @@ import Error from "./pages/Error.tsx";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Tuodaan kalenterin tyylit
 import Calendar from "./pages/Calendar.tsx";
 import { HashRouter, Route, Routes } from "react-router-dom";
+import Statistics from "./pages/Statistics.tsx";
 
 // Alustetaan React-sovellus juurielementtiin
 createRoot(document.getElementById("root")!).render(
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="customers" element={<Customers />} />  {/* /customers → Asiakassivu */}
           <Route path="trainings" element={<Trainings />} />  {/* /trainings → Treenisivu */}
           <Route path="calendar" element={<Calendar />} />    {/* /calendar → Kalenterisivu */}
+          <Route path="statistics" element={<Statistics />} /> {/* /statistics → Tilastot */}
           <Route path="*" element={<Error />} />       {/* Näytetään virhesivu, jos reititys epäonnistuu */}
         </Route>
       </Routes>

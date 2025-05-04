@@ -34,6 +34,9 @@ function App() {
           <Button color="inherit" onClick={() => navigate("/calendar")}>
             Calendar
           </Button>
+          <Button color="inherit" onClick={() => navigate("/statistics")}>
+            Statistics
+          </Button>
         </Toolbar>
       </AppBar>
       {/* Pääsisältö näytetään täällä reitityksen perusteella */}
