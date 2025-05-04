@@ -10,6 +10,7 @@ import { getTrainings, TrainingAll } from "../service/api";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import DeleteTraining from "./DeleteTraining";
+import "./TextCenter.css";
 
 // Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -95,13 +96,25 @@ function TrainingGrid({ reloadTrigger, reloadGrid }: Props) {
 
   return (
     <div
-      style={{ minHeight: 500, margin: "0 auto", width: 640 }}
+      style={{
+        width: "100%",
+        maxWidth: "700px", // maksimi leveys isolla ruudulla
+        margin: "0 auto", // keskittää ruudulle
+        minHeight: "500px", // minimikorkeus
+      }}
       className="ag-theme-alpine"
     >
       <AgGridReact
         rowData={trainings}
         columnDefs={columnDefs}
-        defaultColDef={{ flex: 1, minWidth: 100 }}
+        defaultColDef={{
+          flex: 1,
+          minWidth: 100, // estää liian pienet sarakkeet
+          sortable: true,
+          filter: true,
+          cellStyle: { textAlign: "center" }, // keskittää tekstin
+          headerClass: "ag-header-cell-label-center", // Otsikoiden keskitys (ei toimi?)
+        }}
         paginationPageSize={10}
         pagination={true}
         domLayout="autoHeight"

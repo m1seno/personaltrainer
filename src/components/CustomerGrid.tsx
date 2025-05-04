@@ -10,6 +10,7 @@ import { getCustomers, CustomerAll } from "../service/api";
 import { toast } from "react-toastify";
 import EditCustomer from "./EditCustomer";
 import DeleteCustomer from "./DeleteCustomer";
+import "./TextCenter.css";
 
 // Rekisteröidään kaikki AG-Gridin Community-ominaisuudet käyttöön
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -27,8 +28,6 @@ type Props = {
 function CustomerGrid({ reloadTrigger, reloadGrid, gridRef }: Props) {
   const [customers, setCustomers] = useState<CustomerAll[]>([]);
   const [loading, setLoading] = useState(true);
-
-  
 
   // Sarakemääritykset AG-Gridille
   const [columnDefs] = useState<ColDef<CustomerAll>[]>([
@@ -102,7 +101,12 @@ function CustomerGrid({ reloadTrigger, reloadGrid, gridRef }: Props) {
 
   return (
     <div
-      style={{ minHeight: 500, margin: "0 auto", width: 1300 }}
+    style={{
+      width: '100%',
+      maxWidth: '1300px',  // maksimi leveys isolla ruudulla
+      margin: '0 auto',     // keskittää ruudulle
+      minHeight: '500px',  // minimikorkeus
+    }}
       className="ag-theme-alpine"
     >
       <AgGridReact
@@ -110,7 +114,14 @@ function CustomerGrid({ reloadTrigger, reloadGrid, gridRef }: Props) {
         ref={gridRef} // Viite AG Gridille, jotta voidaan käsitellä rivejä ohjelmallisesti
         rowData={customers}
         columnDefs={columnDefs}
-        defaultColDef={{ flex: 1, minWidth: 100 }}
+        defaultColDef={{
+          flex: 1,
+          minWidth: 100, // estää liian pienet sarakkeet
+          sortable: true,
+          filter: true,
+          cellStyle: { textAlign: 'center' }, // keskittää tekstin
+          headerClass: 'ag-header-cell-label-center'    // Otsikoiden keskitys (ei toimi?)
+        }}
         paginationPageSize={10}
         pagination={true}
         domLayout="autoHeight"
