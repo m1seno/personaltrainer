@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { toast } from "react-toastify";
 import { addTraining, CustomerAll, getCustomers } from "../service/api";
@@ -21,7 +22,9 @@ type Props = {
 export default function AddTraining({ onTrainingAdded }: Props) {
   const [open, setOpen] = useState(false);
   const [customers, setCustomers] = useState<CustomerAll[]>([]); // Asiakkaat API:sta
-  const [selectedCustomer, setSelectedCustomer] = useState<CustomerAll | null>(null);// Valittu asiakas (käytetään asiakaslinkkiä lähetyksessä)
+  const [selectedCustomer, setSelectedCustomer] = useState<CustomerAll | null>(
+    null
+  ); // Valittu asiakas (käytetään asiakaslinkkiä lähetyksessä)
   const [training, setTraining] = useState({
     activity: "",
     duration: "",
@@ -106,6 +109,17 @@ export default function AddTraining({ onTrainingAdded }: Props) {
               onChange={handleDateChange}
               sx={{ marginTop: 2 }}
             />
+            <TimePicker
+              label="Time"
+              value={training.date}
+              onChange={(newTime) => {
+                if (newTime) {
+                  setTraining({ ...training, date: newTime });
+                }
+              }}
+              ampm={false}
+              sx={{ marginTop: 2 }}
+            />
           </LocalizationProvider>
           <TextField
             required
@@ -144,11 +158,11 @@ export default function AddTraining({ onTrainingAdded }: Props) {
                 if (found) setSelectedCustomer(found); // Päivitetään tilaan koko asiakasobjekti
               }}
             >
-                {/* Rakennetaan alasvetovalikon vaihtoehdot */}
+              {/* Rakennetaan alasvetovalikon vaihtoehdot */}
               {customers.map((c) => (
-                <MenuItem 
-                    key={c._links.self.href}  // Käytetään asiakkaan linkkiä avaimena
-                    value={c._links.self.href} // Valitaan asiakkaan linkki alasvetovalikossa
+                <MenuItem
+                  key={c._links.self.href} // Käytetään asiakkaan linkkiä avaimena
+                  value={c._links.self.href} // Valitaan asiakkaan linkki alasvetovalikossa
                 >
                   {c.firstname} {c.lastname}
                 </MenuItem>
